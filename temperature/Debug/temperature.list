@@ -37,15 +37,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00016607  00000000  00000000  0000cc8e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009ac8  00000000  00000000  00023295  2**0
+ 17 .debug_line   0000932a  00000000  00000000  00023295  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008421f  00000000  00000000  0002cd5d  2**0
+ 18 .debug_str    0008423e  00000000  00000000  0002c5bf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b0f7c  2**0
+ 19 .comment      00000043  00000000  00000000  000b07fd  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000026d0  00000000  00000000  000b0fc0  2**2
+ 20 .debug_frame  000026d0  00000000  00000000  000b0840  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000004a  00000000  00000000  000b3690  2**0
+ 21 .debug_line_str 00000069  00000000  00000000  000b2f10  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -490,7 +490,7 @@ uint8_t DHT11_Read(void){
 		delay (40);
  80004b4:	2028      	movs	r0, #40	@ 0x28
  80004b6:	f7ff ff91 	bl	80003dc <delay>
-		if (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)))   // if the pin is low
+		if (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)))
  80004ba:	2108      	movs	r1, #8
  80004bc:	4819      	ldr	r0, [pc, #100]	@ (8000524 <DHT11_Read+0x8c>)
  80004be:	f000 fd1f 	bl	8000f00 <HAL_GPIO_ReadPin>
@@ -522,7 +522,7 @@ uint8_t DHT11_Read(void){
  80004f8:	4313      	orrs	r3, r2
  80004fa:	b25b      	sxtb	r3, r3
  80004fc:	71fb      	strb	r3, [r7, #7]
-		while ((HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)));  // wait for the pin to go low
+		while ((HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)));
  80004fe:	bf00      	nop
  8000500:	2108      	movs	r1, #8
  8000502:	4808      	ldr	r0, [pc, #32]	@ (8000524 <DHT11_Read+0x8c>)
@@ -1478,7 +1478,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
     HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
  8000930:	2200      	movs	r2, #0
  8000932:	6879      	ldr	r1, [r7, #4]
- 8000934:	f04f 30ff 	mov.w	r0, #4294967295
+ 8000934:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
  8000938:	f000 f927 	bl	8000b8a <HAL_NVIC_SetPriority>
     uwTickPrio = TickPriority;
  800093c:	4a06      	ldr	r2, [pc, #24]	@ (8000958 <HAL_InitTick+0x5c>)
@@ -1569,7 +1569,7 @@ __weak void HAL_Delay(uint32_t Delay)
   /* Add a freq to guarantee minimum wait */
   if (wait < HAL_MAX_DELAY)
  80009a6:	68fb      	ldr	r3, [r7, #12]
- 80009a8:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 80009a8:	f1b3 3fff 	cmp.w	r3, #4294967295	@ 0xffffffff
  80009ac:	d005      	beq.n	80009ba <HAL_Delay+0x26>
   {
     wait += (uint32_t)(uwTickFreq);
@@ -1804,7 +1804,7 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 
   return (
            ((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
- 8000b00:	f04f 32ff 	mov.w	r2, #4294967295
+ 8000b00:	f04f 32ff 	mov.w	r2, #4294967295	@ 0xffffffff
  8000b04:	69bb      	ldr	r3, [r7, #24]
  8000b06:	fa02 f303 	lsl.w	r3, r2, r3
  8000b0a:	43da      	mvns	r2, r3
@@ -1813,7 +1813,7 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
  8000b10:	697b      	ldr	r3, [r7, #20]
  8000b12:	409a      	lsls	r2, r3
            ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
- 8000b14:	f04f 31ff 	mov.w	r1, #4294967295
+ 8000b14:	f04f 31ff 	mov.w	r1, #4294967295	@ 0xffffffff
  8000b18:	697b      	ldr	r3, [r7, #20]
  8000b1a:	fa01 f303 	lsl.w	r3, r1, r3
  8000b1e:	43d9      	mvns	r1, r3
@@ -1858,7 +1858,7 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
  8000b4c:	6053      	str	r3, [r2, #4]
   NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
  8000b4e:	210f      	movs	r1, #15
- 8000b50:	f04f 30ff 	mov.w	r0, #4294967295
+ 8000b50:	f04f 30ff 	mov.w	r0, #4294967295	@ 0xffffffff
  8000b54:	f7ff ff90 	bl	8000a78 <__NVIC_SetPriority>
   SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Value */
  8000b58:	4b05      	ldr	r3, [pc, #20]	@ (8000b70 <SysTick_Config+0x40>)

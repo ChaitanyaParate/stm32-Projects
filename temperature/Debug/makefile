@@ -60,8 +60,8 @@ all: main-build
 main-build: temperature.elf secondary-outputs
 
 # Tool invocations
-temperature.elf temperature.map: $(OBJS) $(USER_OBJS) D:\STM32CubeIDE\temperature\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "temperature.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\STM32CubeIDE\temperature\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="temperature.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+temperature.elf temperature.map: $(OBJS) $(USER_OBJS) /media/chaitanyaparate/New\ Volume/STM32CubeIDE/temperature/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "temperature.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/media/chaitanyaparate/New Volume/STM32CubeIDE/temperature/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="temperature.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
